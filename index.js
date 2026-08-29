@@ -1,91 +1,21 @@
-const express = require('express');
-const ytdl = require('ytdl-core');
-const cors = require('cors');
+import {spawn} from 'node:child_process';
 
-const app = express();
-app.use(cors());
 
-app.get('/', (req, res) => {
-  const ping = new Date();
-  ping.setHours(ping.getHours() - 3);
-  console.log(
-    `Ping at: ${ping.getUTCHours()}:${ping.getUTCMinutes()}:${ping.getUTCSeconds()}`
-  );
-  res.sendStatus(200);
+let youtubeUrl = 'https://www.youtube.com/watch?v=Jklg-ivTHYQ&start_radio=1'
+
+const process = spawn('yt-dlp', [
+  '-x', '--audio-format', 'mp3', '--audio-quality', '192K', '-P',
+  '~/Desktop/schrottify/testfiles', youtubeUrl
+]);
+
+process.stdout.on('data', data => {
+  console.log(data.toString());
 });
 
-app.get('/info', async (req, res) => {
-  const { url } = req.query;
-
-  if (url) {
-    console.log(url);
-    const isValid = ytdl.validateURL(url);
-
-    if (isValid) {
-      const info = (await ytdl.getInfo(url)).videoDetails;
-
-      const title = info.title;
-      const thumbnail = info.thumbnails[2].url;
-
-      res.send({ title: title, thumbnail: thumbnail });
-    } else {
-      res.status(400).send('Invalid url');
-    }
-  } else {
-    res.status(400).send('Invalid query');
-  }
+process.stderr.on('data', data => {
+  console.error(data.toString());
 });
 
-app.get('/mp3', async (req, res) => {
-  const { url } = req.query;
-
-  if (url) {
-    const isValid = ytdl.validateURL(url);
-
-    if (isValid) {
-      const videoName = (await ytdl.getInfo(url)).videoDetails.title;
-
-      res.header(
-        'Content-Disposition',
-        `attachment; filename="${videoName}.mp3"`
-      );
-      res.header('Content-type', 'audio/mpeg3');
-
-      ytdl(url, { quality: 'highestaudio', format: 'mp3' }).pipe(res);
-    } else {
-      res.status(400).send('Invalid url');
-    }
-  } else {
-    res.status(400).send('Invalid query');
-  }
-});
-
-app.get('/mp4', async (req, res) => {
-  const { url } = req.query;
-
-  if (url) {
-    const isValid = ytdl.validateURL(url);
-
-    if (isValid) {
-      const videoName = (await ytdl.getInfo(url)).videoDetails.title;
-
-      res.header(
-        'Content-Disposition',
-        `attachment; filename="${videoName}.mp4"`
-      );
-
-      ytdl(url, {
-        quality: 'highest',
-        format: 'mp4',
-      }).pipe(res);
-    } else {
-      res.status(400).send('Invalid url');
-    }
-  } else {
-    res.status(400).send('Invalid query');
-  }
-});
-
-app.listen(3500, () => {
-  console.log('Server on');
+process.on('close', code => {
+  console.log(`yt-dlp exited with ${code}`);
 });
