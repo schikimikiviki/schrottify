@@ -1,21 +1,12 @@
-import {spawn} from 'node:child_process';
+import {fetchData} from './helpers.js'
+import {downloadMp3} from './mp3-functions.js'
+import {getAccessToken, getPlayListWithID} from './spotify.js';
 
+let youtubeUrl = 'https://www.youtube.com/watch?v=Jklg-ivTHYQ&start_radio=1';
+let playListID = '5ATbARi8XEvqgvxdUZldFb'
 
-let youtubeUrl = 'https://www.youtube.com/watch?v=Jklg-ivTHYQ&start_radio=1'
+let token = await getAccessToken();
+console.log('Credentials: ', await token)
 
-const process = spawn('yt-dlp', [
-  '-x', '--audio-format', 'mp3', '--audio-quality', '192K', '-P',
-  '~/Desktop/schrottify/testfiles', youtubeUrl
-]);
-
-process.stdout.on('data', data => {
-  console.log(data.toString());
-});
-
-process.stderr.on('data', data => {
-  console.error(data.toString());
-});
-
-process.on('close', code => {
-  console.log(`yt-dlp exited with ${code}`);
-});
+getPlayListWithID(playListID, token);
+//  downloadMp3(youtubeUrl);
