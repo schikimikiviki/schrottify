@@ -27,3 +27,7 @@ This is the request for a playlist:
 curl 'https://api.spotify.com/v1/playlists/5ATbARi8XEvqgvxdUZldFb' \
   -H 'Authorization: Bearer token'
 ```
+
+
+# Youtube API
+the song and artist names are used for querying the youtube API. 

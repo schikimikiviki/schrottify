@@ -13,8 +13,31 @@ export const getPlayListWithID =
       console.log('String: ', string);
       console.log(credentials)
 
-      fetchData(string, credentials);
+      return fetchData(string, credentials);
     }
+
+
+export const getSongsFromPlayListWithID =
+    async (playListID, credentials) => {
+  let data = await getPlayListWithID(playListID, credentials);
+  let songs = data.tracks.items;
+
+  let name, artists
+  let songArr = []
+
+      for (let i in songs) {
+    name = songs[i].track.name
+    artists = ''
+
+    for (let j in songs[i].item.artists) {
+      artists += songs[i].item.artists[j].name
+    }
+
+    songArr[i] = (name + ' - ' + artists)
+  }
+
+  return songArr
+}
 
 // without this nozthing can be fetched
 export const getAccessToken = () => {
