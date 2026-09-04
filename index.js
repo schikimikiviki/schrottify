@@ -1,6 +1,7 @@
 import {fetchData} from './helpers.js'
 import {downloadMp3} from './mp3-functions.js'
 import {getAccessToken, getPlayListWithID, getSongsFromPlayListWithID} from './spotify.js';
+import {fetchSongInfo} from './youtube.js'
 
 let youtubeUrl = 'https://www.youtube.com/watch?v=Jklg-ivTHYQ&start_radio=1';
 let playListID = '5ATbARi8XEvqgvxdUZldFb'
@@ -11,10 +12,15 @@ let token = await getAccessToken();
 let songs = await getSongsFromPlayListWithID(playListID, token);
 
 
-for (let i in songs) {
-  console.log(songs[i])
-}
+// for (let i in songs) {
+//   console.log(songs[i])
+// }
 
+let query = 'Sprawling Idiot Effigy - Neros Day At Disneyland';
+let res = await fetchSongInfo(query);
 
+let youtubeID = res['items'][0]['id']['videoId'];
+let youtubeURL = `https://www.youtube.com/watch?v=${youtubeID}`
+console.log(youtubeURL)
 
-//  downloadMp3(youtubeUrl);
+    //  downloadMp3(youtubeUrl);

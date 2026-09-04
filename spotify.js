@@ -10,10 +10,9 @@ export const getPlayListWithID =
       let spotifyAPI = 'https://api.spotify.com/v1/playlists/';
 
       let string = spotifyAPI + playListID
-      console.log('String: ', string);
-      console.log(credentials)
 
-      return fetchData(string, credentials);
+
+      return fetchData(string, credentials, false);
     }
 
 

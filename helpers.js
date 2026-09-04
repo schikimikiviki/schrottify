@@ -2,18 +2,40 @@
 import 'dotenv/config'
 const accessToken = process.env.SPOTIFY_CLIENT_SECRET
 
+
+
 export const fetchData =
-    async (url, token) => {
+    async (url, token, keyIsQueryParam) => {
   try {
-    const response =
-        await fetch(url, {headers: {Authorization: 'Bearer ' + token}});
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+    if (!keyIsQueryParam) {
+      // token als Bearer mitgeben
+      console.log('##########')
+      console.log('Fetching with bearer token ... ')
+      console.log('URL: ' + url)
+      console.log('##########')
+      const response =
+          await fetch(url, {headers: {Authorization: 'Bearer ' + token}});
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      return await response.json();
+
+
+    } else {
+      // token is schon teil der URL
+      console.log('##########')
+      console.log('Fetching with token in URL param ... ')
+      console.log('URL: ' + url)
+      console.log('##########')
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      return await response.json();
     }
 
-    const result = await response.json();
-    // console.log(result)
-    return result;
 
   } catch (error) {
     console.error(error.message);
