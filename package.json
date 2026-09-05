@@ -21,6 +21,7 @@
     "dependencies": {
         "@distube/ytdl-core": "^4.16.12",
         "@webtui/css": "^0.1.10",
+        "body-parser": "^2.3.0",
         "cors": "^2.8.5",
         "dotenv": "^17.4.2",
         "express": "^4.22.2"

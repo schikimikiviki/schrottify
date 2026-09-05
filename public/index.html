@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>schrottify :: terminal</title>
         <link rel="stylesheet" href="/styles.css">
+        <script src="/script.js"></script>
     </head>
 <body>
 
@@ -22,11 +23,16 @@
 
     <p box-=double box-=round>root@schrottify:~$ <strong> downloading shit ...</strong></p>
 
+    <br/>
+    <div class="main">
 
-    <h2>Download spotify playlist</h2>
-    <form is-~="command" action="#" method="get">
+
+        
+        <div>
+ <h2>Download spotify playlist</h2>
+    <!-- <form is-~="command" action="/download-spotify" method="get" id='spotify-form'>
         <label>
-            <input type="text" name="cmd" placeholder="Paste url ..." autofocus>
+            <input type="text" name="url" placeholder="Paste url ..." autofocus>
         </label>
         <button type="submit" variant-=foreground0>Run</button>
     </form>
@@ -34,11 +40,25 @@
      <h2>Download youtube playlist</h2>
     <form is-~="command" action="#" method="get">
         <label>
-            <input type="text" name="cmd" placeholder="Paste url ..." autofocus>
+            <input type="text" name="url" placeholder="Paste url ..." autofocus>
         </label>
         <button type="submit" variant-=foreground0>Run</button>
-    </form>
+    </form> -->
 
+      <form action="/submit">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" 
+               placeholder="Enter Your Name" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" 
+               placeholder="Enter Your Email" required>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+        </div>
+
+        <div>
 
     <!-- queue visualisieren -->
         <h2>Downloading</h2>
@@ -51,6 +71,13 @@
         <li>Legends Never Die – League of Legends</li>
         <li>Six Feet Under – Smash Into Pieces</li>
     </ul>
+
+        </div>
+
+    </div>
+
+   
+
 
 
     <separator></separator>
