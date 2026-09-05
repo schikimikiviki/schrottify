@@ -3,9 +3,8 @@ import express from 'express'
 import {dirname, join} from 'path';
 import {fileURLToPath} from 'url';
 
-import {fetchData} from './helpers.js'
 import {downloadMp3} from './mp3-functions.js'
-import {getAccessToken, getPlayListWithID, getSongsFromPlayListWithID} from './spotify.js';
+import {getAccessToken, getSongsFromPlayListWithID} from './spotify.js';
 import {fetchSongInfo} from './youtube.js'
 
 
@@ -13,8 +12,10 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+app.set('view engine', 'ejs');
+
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded());
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(join(__dirname, 'public')))
 
@@ -28,7 +29,7 @@ app.get('/download-spotify', async (req, res) => {
   let url = req.query.url;
   console.log(url);
 
-  console.log('SPOTIFY DOWNLOAD START')
+  console.log('SPOTIFY DOWNLOAD START');
 
   console.log('Url: ' + url)
   let parts = url.split('playlist/');
@@ -49,20 +50,20 @@ app.get('/download-spotify', async (req, res) => {
     percentage = ~~percentage  // round up
     console.log(songs[i])
     console.log('Percentage: ', percentage)
-    let res = await fetchSongInfo(songs[i]);
+    let result = await fetchSongInfo(songs[i]);
 
-    let youtubeID = res['items'][0]['id']['videoId'];
+    let youtubeID = result['items'][0]['id']['videoId'];
     let youtubeURL = `https://www.youtube.com/watch?v=${youtubeID}`
     console.log(youtubeURL)
 
     downloadMp3(youtubeURL);
   }
 
-  // res.render('index', {songs, percentage})
+  res.render('index', {songs: songs});
 });
 
 app.use('/', function(req, res) {
-  res.sendFile(join(__dirname, 'public/index.html'));
+  res.render('index', {songs: []});
 });
 
 app.listen(3000);

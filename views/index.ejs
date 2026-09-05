@@ -37,6 +37,7 @@
         <button type="submit" variant-=foreground0>Run</button>
     </form>
 
+
      <h2>Download youtube playlist</h2>
     <form is-~="command" action="#" method="get">
         <label>
@@ -56,10 +57,14 @@
 
     <h2>Queue</h2>
     <ul marker-=round-tree>
-        <li><strong>Sprawling Idiot Effigy</strong> – Nero's Day At Disneyland</li>
+            <% songs.forEach(song => { %>
+                <li><%= song %></li>
+            <% }); %>
+
+        <!-- <li><strong>Sprawling Idiot Effigy</strong> – Nero's Day At Disneyland</li>
         <li>In the End – Linkin Park</li>
         <li>Legends Never Die – League of Legends</li>
-        <li>Six Feet Under – Smash Into Pieces</li>
+        <li>Six Feet Under – Smash Into Pieces</li> -->
     </ul>
 
         </div>
