@@ -1,0 +1,25 @@
+@layer base, utils, components;
+
+@import '/webtui/base.css';
+
+/* Utils */
+@import '/webtui/utils/box.css';
+
+/* Components */
+@import '/webtui/components/typography.css';
+@import '/webtui/components/button.css';
+@import '/webtui/components/dialog.css';
+@import '/webtui/components/pre.css';
+@import '/webtui/components/input.css';
+@import '/webtui/components/separator.css';
+@import '/webtui/components/progress.css';
+@import '/webtui/components/table.css';
+
+
+#about {
+padding: 20px; 
+}
+
+body {
+  padding: 50px;   
+}

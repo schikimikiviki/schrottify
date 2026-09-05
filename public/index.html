@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html data-webtui-theme="dark">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>schrottify :: terminal</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+<body>
+
+    <pre>
+
+    
+░██████╗░█████╗░██╗░░██╗██████╗░░█████╗░████████╗████████╗██╗███████╗██╗░░░██╗
+██╔════╝██╔══██╗██║░░██║██╔══██╗██╔══██╗╚══██╔══╝╚══██╔══╝██║██╔════╝╚██╗░██╔╝
+╚█████╗░██║░░╚═╝███████║██████╔╝██║░░██║░░░██║░░░░░░██║░░░██║█████╗░░░╚████╔╝░
+░╚═══██╗██║░░██╗██╔══██║██╔══██╗██║░░██║░░░██║░░░░░░██║░░░██║██╔══╝░░░░╚██╔╝░░
+██████╔╝╚█████╔╝██║░░██║██║░░██║╚█████╔╝░░░██║░░░░░░██║░░░██║██║░░░░░░░░██║░░░
+╚═════╝░░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░░░░╚═╝░░░░░░╚═╝░░░╚═╝╚═╝░░░░░░░░╚═╝░░░
+    </pre>
+
+    <p box-=double box-=round>root@schrottify:~$ <strong> downloading shit ...</strong></p>
+
+
+    <h2>Download spotify playlist</h2>
+    <form is-~="command" action="#" method="get">
+        <label>
+            <input type="text" name="cmd" placeholder="Paste url ..." autofocus>
+        </label>
+        <button type="submit" variant-=foreground0>Run</button>
+    </form>
+
+     <h2>Download youtube playlist</h2>
+    <form is-~="command" action="#" method="get">
+        <label>
+            <input type="text" name="cmd" placeholder="Paste url ..." autofocus>
+        </label>
+        <button type="submit" variant-=foreground0>Run</button>
+    </form>
+
+
+    <!-- queue visualisieren -->
+        <h2>Downloading</h2>
+    <progress is- value="65" max="100">65%</progress>
+
+    <h2>Queue</h2>
+    <ul marker-=round-tree>
+        <li><strong>Sprawling Idiot Effigy</strong> – Nero's Day At Disneyland</li>
+        <li>In the End – Linkin Park</li>
+        <li>Legends Never Die – League of Legends</li>
+        <li>Six Feet Under – Smash Into Pieces</li>
+    </ul>
+
+
+    <separator></separator>
+
+    <p>
+       <button is- onclick="document.getElementById('about').showModal()" variant-=foreground0>about</button></p>
+
+    <dialog id="about" size-=small position-=center>
+        <p><strong>schrottify</strong></p>
+        <p>YouTube / Spotify downloader front-end, styled with WebTUI.</p>
+        <button is- onclick="document.getElementById('about').close()" variant-=foreground0>close</button>
+    </dialog>
+
+</body>
+</html>
