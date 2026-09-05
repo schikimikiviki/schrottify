@@ -32,6 +32,6 @@ curl 'https://api.spotify.com/v1/playlists/5ATbARi8XEvqgvxdUZldFb' \
 # Youtube API
 the song and artist names are used for querying the youtube API. 
 
-# TODO 
-- rewrite vanilla js into express server
-- serve frontend
+# Frontend
+
+webtui

@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+// app.use(bodyParser.urlencoded());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(join(__dirname, 'public')))
 
@@ -22,46 +22,47 @@ app.use(
     '/webtui',
     express.static(join(__dirname, 'node_modules/@webtui/css/dist')));
 
-app.use('/', function(req, res) {
-  res.sendFile(join(__dirname, 'public/index.html'));
-});
 
-app.get('/submit', (req, res) => {
-  const data = req.query;
-  console.log(data);
-  res.send(`<h1 style="text-align: center; 
-    margin-top: 50vh; transform: translateY(-50%);">
-    Form submitted successfully!</h1>`);
-});
 
 app.get('/download-spotify', async (req, res) => {
-  const data = req.body;
-  console.log(data);
-  console.log(req)
+  let url = req.query.url;
+  console.log(url);
+
   console.log('SPOTIFY DOWNLOAD START')
 
-  let youtubeUrl = url;
-
-  console.log('Url: ' + youtubeUrl)
-  // let
-  // playListID = '5ATbARi8XEvqgvxdUZldFb'
-
-  // let token = await getAccessToken();
-  // let songs = await getSongsFromPlayListWithID(playListID, token);
+  console.log('Url: ' + url)
+  let parts = url.split('playlist/');
+  let playListID = parts[1]
+  console.log('ID: ', playListID)
 
 
-  // // for (let i in songs) {
-  // //   console.log(songs[i])
-  // // }
+  let token = await getAccessToken();
+  let songs = await getSongsFromPlayListWithID(playListID, token);
 
-  // let query = 'Sprawling Idiot Effigy - Neros Day At Disneyland';
-  // let res = await fetchSongInfo(query);
+  let numberOfSongs = songs.length;
 
-  // let youtubeID = res['items'][0]['id']['videoId'];
-  // let youtubeURL = `https://www.youtube.com/watch?v=${youtubeID}`
-  // console.log(youtubeURL)
 
-  //  downloadMp3(youtubeUrl);
+
+  for (let i in songs) {
+    // p = A * 100 / G
+    let percentage = ((i + 1) * 100) / numberOfSongs
+    percentage = ~~percentage  // round up
+    console.log(songs[i])
+    console.log('Percentage: ', percentage)
+    let res = await fetchSongInfo(songs[i]);
+
+    let youtubeID = res['items'][0]['id']['videoId'];
+    let youtubeURL = `https://www.youtube.com/watch?v=${youtubeID}`
+    console.log(youtubeURL)
+
+    downloadMp3(youtubeURL);
+  }
+
+  // res.render('index', {songs, percentage})
+});
+
+app.use('/', function(req, res) {
+  res.sendFile(join(__dirname, 'public/index.html'));
 });
 
 app.listen(3000);
